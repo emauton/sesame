@@ -1,0 +1,17 @@
+%% -*- erlang -*-
+{application, sesame,
+ [
+  {description, "Simple ESP security association manager."},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  eper,
+                  exometer_core,
+                  exometer,
+                  recon
+                 ]},
+  {mod, { sesame_app, []}},
+  {env, []}
+ ]}.

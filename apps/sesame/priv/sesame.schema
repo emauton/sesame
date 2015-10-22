@@ -1,0 +1,9 @@
+%%-*- mode: erlang -*-
+%% See https://github.com/basho/cuttlefish
+
+%% @doc Port to listen on (and connect to on other machines).
+{mapping, "sesame.port", "sesame.port", [
+  {datatype, integer},
+  {default, 8500},
+  hidden
+]}.

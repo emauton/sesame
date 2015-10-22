@@ -1,0 +1,36 @@
+# CircleCI setup for Erlang based originally on Parroty's for Elixir:
+#   https://parroty00.wordpress.com/2014/06/29/elixir-on-circleci/
+# In concert with the Makefile, this ensures that lint, xref, dialyzer
+# etc. get run on the project as part of CI as well as testing.
+#
+# A Debian package and EDoc are stored as build artifacts.
+
+machine:
+  environment:
+    PATH: ${HOME}/erlang/bin:${PATH}
+
+dependencies:
+  pre:
+    - bash ./circle/install-erlang.sh
+    - bash ./circle/install-rebar.sh
+    - bash ./circle/install-elvis.sh
+  override:
+    - make
+    - make plt
+  cache_directories:
+    - ~/erlang
+    - ~/dialyzer
+    - deps
+
+test:
+  override:
+    - make
+    - make lint
+    - make tests
+    - make rel
+    - make docs
+    - make package
+  post:
+    - cp package/packages/*.deb ${CIRCLE_ARTIFACTS}
+    - bash ./circle/copy-docs.sh
+    - bash ./circle/copy-coverage.sh

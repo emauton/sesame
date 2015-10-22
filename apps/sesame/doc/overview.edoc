@@ -1,0 +1,37 @@
+@doc
+This document describes the design and implementation of the
+<a href="https://github.com/emauton/sesame">sesame</a>
+<a href="http://www.erlang.org/doc/design_principles/applications.html">Erlang/OTP application</a>.
+
+The intended audience is sesame programmers. We assume a basic understanding of
+Erlang/OTP application structure and
+<a href="http://www.erlang.org/doc/design_principles/des_princ.html">design principles</a>.
+A suitable background should be provided by
+<a href="http://www.manning.com/logan/">Erlang and OTP in Action</a>
+by Logan et al.
+
+== Overview ==
+overview here
+
+== Processes ==
+`sesame' presents an
+<a href="http://www.erlang.org/doc/design_principles/des_princ.html">Erlang/OTP supervision hierarchy</a>
+with the following shape:
+<center><img src="sesame_processes.png" width="300" alt="sesame process tree diagram"></img></center>
+(<a href="https://docs.google.com/drawings/d/1mDlux1Vy39mLvtYL6-_xFD9Ky6q9bfJdtFZemw4t7X0/edit">source</a>)
+
+The <strong>bold</strong> components correspond to modules provided by the
+`sesame' application:
+
+=== sesame_app ===
+The callback module for the `sesame'
+<a href="http://www.erlang.org/doc/design_principles/applications.html">application master</a>.
+Initializes {@link sesame} and starts {@link sesame_sup}.
+
+=== sesame_sup ===
+The main application supervisor. Manages {@link X}.
+
+== Additional modules ==
+
+=== module_here ===
+description here
