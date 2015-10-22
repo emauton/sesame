@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <syslog.h>
+#include <sys/capability.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -30,6 +31,9 @@ int pf_key_sock;  /* We maintain one PF_KEY socket, opened in main() and
 
 /* Return a PF_KEY socket or crash. */
 int open_pf_key(void);
+
+/* Drop all capabilities (likely just CAP_NET_ADMIN) or crash. */
+void drop_capabilities(void);
 
 /* Set an FD nonblocking or crash. */
 void set_nonblocking(int fd);
@@ -97,6 +101,7 @@ int main(void) {
     set_nonblocking(STDIN_FILENO);
     set_nonblocking(STDOUT_FILENO);
     pf_key_sock = open_pf_key();
+    drop_capabilities();
 
     ev_io_init(&stdin_watcher, stdin_cb, STDIN_FILENO, EV_READ);
     ev_io_start(loop, &stdin_watcher);
@@ -116,6 +121,23 @@ int open_pf_key(void) {
     if (fd == -1)
         log_exit("opening pf_key socket: %s", strerror(errno));
     return fd;
+}
+
+void drop_capabilities(void) {
+    cap_t caps;
+
+    caps = cap_get_proc();
+    if (caps == NULL)
+        log_exit("getting current capabilities: %s", strerror(errno));
+
+    if (cap_clear(caps) == -1)
+        log_exit("clearing capabilities structure: %s", strerror(errno));
+
+    if (cap_set_proc(caps) == -1)
+        log_exit("setting new capabilities: %s", strerror(errno));
+
+    if (cap_free(caps) == -1)
+        log_exit("freeing capabilities structure: %s", strerror(errno));
 }
 
 void set_nonblocking(int fd) {
