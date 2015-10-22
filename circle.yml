@@ -14,6 +14,7 @@ dependencies:
     - bash ./circle/install-erlang.sh
     - bash ./circle/install-rebar.sh
     - bash ./circle/install-elvis.sh
+    - bash ./circle/install-clibs.sh
   override:
     - make
     - make plt
