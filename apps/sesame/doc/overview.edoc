@@ -29,7 +29,7 @@ The callback module for the `sesame'
 Initializes {@link sesame} and starts {@link sesame_sup}.
 
 === sesame_sup ===
-The main application supervisor. Manages {@link X}.
+The main application supervisor. Manages X.
 
 == Additional modules ==
 
