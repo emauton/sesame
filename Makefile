@@ -26,7 +26,7 @@ clean: docsclean
 	$(REBAR) clean
 	rm -f pfkeyport
 
-distclean: clean devclean relclean
+distclean: clean relclean docsclean pkgclean
 	$(REBAR) delete-deps
 
 rel: all relclean
@@ -110,5 +110,5 @@ dist: package.src
 package: package.src
 	${MAKE} -C package -f $(PKG_ID)/deps/node_package/Makefile
 
-pkgclean: distclean
+pkgclean:
 	rm -rf package

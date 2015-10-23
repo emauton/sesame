@@ -22,7 +22,11 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#define SIZE 32768
+/* Read up to 1MiB at a time. This limit may hurt us later (e.g. with a dump
+ * of a really large SPD or SAD), but a finer-grained port protocol allowing
+ * Erlang to define how much it reads from the socket, though possible, is
+ * not worth fiddling with for now. */
+#define SIZE 1048576
 
 int pf_key_sock;  /* We maintain one PF_KEY socket, opened in main() and
                      written in stdin_cb(). */

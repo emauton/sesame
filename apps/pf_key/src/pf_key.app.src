@@ -1,0 +1,13 @@
+%% -*- erlang -*-
+{application, pf_key,
+ [
+  {description, "PF_KEY port interface."},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { pf_key_app, []}},
+  {env, []}
+ ]}.

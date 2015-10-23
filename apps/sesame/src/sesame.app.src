@@ -10,6 +10,7 @@
                   eper,
                   exometer_core,
                   exometer,
+                  pf_key,
                   recon
                  ]},
   {mod, { sesame_app, []}},
