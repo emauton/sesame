@@ -21,7 +21,7 @@ encode_header(Msg) when is_record(Msg, sadb_msg) ->
       (Msg#sadb_msg.seq):32/native-unsigned,
       (Msg#sadb_msg.pid):32/native-unsigned>>.
 
-%% @doc Decode a PF_KEY extension from the start of `Bin`; ignore the rest.
+%% @doc Decode a PF_KEY extension from the start of `Bin'; ignore the rest.
 -spec decode_header(Bin :: binary()) -> tuple().
 decode_header(<<Version:8/native-unsigned,
                 Type:8/native-unsigned,
@@ -34,7 +34,7 @@ decode_header(<<Version:8/native-unsigned,
                 _Rest/binary>>) ->
     {sadb_msg, Version, Type, Errno, SAType, Len, Reserved, Seq, Pid}.
 
-%% @doc Encode a PF_KEY extension `Msg` to binary.
+%% @doc Encode a PF_KEY extension `Msg' to binary.
 -spec encode_ext(Msg :: tuple()) -> binary().
 encode_ext(Msg) when is_record(Msg, sadb_sa) ->
     <<(Msg#sadb_sa.len):16/native-unsigned,
@@ -64,7 +64,7 @@ encode_ext(Msg) when is_record(Msg, sadb_key) ->
       (Msg#sadb_key.bits):16/native-unsigned,
       (Msg#sadb_key.reserved):16/native-unsigned>>.
 
-%% @doc Decode a PF_KEY extension from the start of `Bin`; ignore the rest.
+%% @doc Decode a PF_KEY extension from the start of `Bin'; ignore the rest.
 -spec decode_ext(Bin :: binary()) -> tuple().
 decode_ext(<<Len:16/native-unsigned,
              ExtType:16/native-unsigned,
@@ -115,7 +115,7 @@ decode_ext(<<Len:16/native-unsigned,
       _Tail/binary>> = Bin,
     {sadb_key, Len, ExtType, Bits, Reserved}.
 
-%% @doc Size in bytes of PF_KEY record `Type` (in binary form).
+%% @doc Size in bytes of PF_KEY record `Type' (in binary form).
 -spec sizeof(Type :: atom()) -> non_neg_integer().
 sizeof(sadb_msg)      -> 16;
 sizeof(sadb_ext)      -> 4;
