@@ -7,13 +7,10 @@ OVERLAY_VARS    ?=
 
 .PHONY: deps docs
 
-all: deps compile pfkeyport
+all: deps compile
 
 capability: pfkeyport
-	sudo setcap cap_net_admin=ep pfkeyport
-
-pfkeyport: pfkeyport.c
-	gcc -Wall -pedantic -o pfkeyport pfkeyport.c -lev -lcap
+	sudo setcap cap_net_admin=ep apps/pf_key/priv/pfkeyport
 
 export EXOMETER_PACKAGES="(basic)"
 compile:
